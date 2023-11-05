@@ -3,6 +3,7 @@ from django.views import View
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import random
 import re
 
 def email_sintaxe(email):
@@ -14,13 +15,14 @@ def email_sintaxe(email):
         return False
     
 
-def send_email(receiver):
+def send_email(receiver,code):
     #SMTP CONFIGS
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
     smtp_username = 'luiisp.validmail@gmail.com'
     smtp_password = 'meru jrih sesu szzo'
     sender = 'Valid Email?'
+
 
 
     msg = MIMEMultipart()
@@ -41,7 +43,7 @@ def send_email(receiver):
                         <h1 style="color: #4611E5;">Olá {receiver} 👋</h1>
                         <p style="font-size: 14px;">Você acaba de testar minha aplicação DJANGO para verificar se seu email é válido.</p>
                         <p style="font-size: 24px;">Seu código de verificação é:</p>
-                        <h1 style="color: #E5115B; font-size: 15vh;">24552</h1>
+                        <h1 style="color: #E5115B; font-size: 15vh;">{code}</h1>
                         <p style="font-size: 14px;">Insira este código no site que provavelmente deve estar rodando <a href="http://127.0.0.1:8000/" style="color: #11e594; text-decoration: none;">nesta porta</a></p>
                         <p style="font-size: 14px;"><a href="https://github.com/luiisp/ValidEmail" style="color: #4611E5; text-decoration: none;">Visite o repositório oficial</a></p>
                         <a style="color: #ffffff; font-size: 24px;" href="https://github.com/luiisp">GitHub</a>
@@ -66,10 +68,6 @@ def send_email(receiver):
     except Exception as e:
         print('Erro ao enviar o email: ' + str(e))
         return False
-
-
-
-
 class Menu(View):
     def get(self,request):
         notice = None
@@ -82,8 +80,14 @@ class Menu(View):
         if emailV == False:
             notice = 'Email Invalido!'
         else:
-            notice = f'Um código verificação foi enviado para {email}'
-            stage = 2
+            code = ''.join(str(random.randint(0, 9)) for _ in range(5))
+            send = send_email(email,code)
+            if send:
+                notice = f'Um código verificação foi enviado para {email}'
+                stage = 2
+            else:
+                notice = f'Ocorreu um erro ao enviar o codigo a este email.'
+
 
         return render(request, 'menu/index.html',{'notice':notice,
                                                   'stage':stage})
