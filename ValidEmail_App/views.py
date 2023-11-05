@@ -4,7 +4,6 @@ from .  models import Mail
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from django.http import HttpResponseRedirect
 import random
 import re
 
