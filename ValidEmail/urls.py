@@ -22,5 +22,4 @@ from ValidEmail_App.views import Menu
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Menu.as_view(),name='menu'),
-    path('sucess', views.sucess,name='sucess'),
 ]

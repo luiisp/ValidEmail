@@ -70,10 +70,7 @@ def send_email(receiver,code):
     except Exception as e:
         print('Erro ao enviar o email: ' + str(e))
         return False
-    
-def sucess(request):
-    
-    return render(request,'sucess/sucess.html')
+ 
 
 class Menu(View):
     def get(self,request):
