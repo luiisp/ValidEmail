@@ -1,0 +1,37 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valid Mail?</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v1">
+    <link rel="icon" href="{% static 'img/520logo.png' %}" type="image/x-icon">
+</head>
+<body>
+
+    {% if notice != None %}
+    <p id="notice">{{notice}}</p>
+    {% endif %}
+
+    <div id="main">
+        <img src="{% static 'img/520logo.png' %}" alt="" id="logo">
+        <h1>Seu email é valido?</h1>
+
+        {% if stage == 1%}
+        <form name="email-form"  method="post" id="email-form">
+            {% csrf_token %}
+            <input type="text" autocomplete="off" autocapitalize="off" name="email" placeholder="Digite seu email" id="email-input">
+        </form>
+        {% endif %}
+        {% if stage == 2%}
+        <form name="code-form"  method="post" id="code-form">
+            {% csrf_token %}
+            <input type="text" autocomplete="off" autocapitalize="off" name="code" placeholder="Digite o codigo enviado para seu email." id="code-input">
+        </form>
+        {% endif %}
+        <p id="info">Este site simula o envio de codigos de confirmação para e-mail</p>
+    </div>
+<script src="{% static 'js/script.js' %}?v1"></script>
+</body>
+</html>
