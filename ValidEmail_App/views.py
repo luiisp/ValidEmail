@@ -4,6 +4,7 @@ from .  models import Mail
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from django.http import HttpResponseRedirect
 import random
 import re
 
@@ -81,9 +82,12 @@ class Menu(View):
         info = 'Este site simula o envio de codigos de confirmação para e-mail'
         request.session['stage'] = 1
         request.session['email'] = None 
+        
         return render(request, 'menu/index.html',{'notice':notice,
                                                   'stage':request.session['stage'],
                                                   'info':info})
+    
+
     def post(self,request): 
         notice = 'ok'
         info = 'Este site simula o envio de codigos de confirmação para e-mail'

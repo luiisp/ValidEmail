@@ -9,12 +9,11 @@
             Seu email é valido?
         {% elif stage == 2%}
             Digite o código de verificação enviado ao seu email.
+        {% elif stage == 3%}
+            Email Verificado!
         {% else %}
             Valid Email?
         {% endif %}
-
-
-
     </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v1">
     <link rel="icon" href="{% static 'img/520logo.png' %}" type="image/x-icon">
@@ -30,46 +29,43 @@
         {% endif %}
         <img src="{% static 'img/520logo.png' %}" alt="" id="logo">
         {% endif %}
+
+
         {% if stage == 1%}
         <form name="email-form"  method="post" id="email-form">
             {% csrf_token %}
             <input type="text" autocomplete="off" autocapitalize="off" name="email" placeholder="Digite seu email" id="email-input">
         </form>
         {% endif %}
+
+
         {% if stage == 2%}
         <form name="code-form"  method="post" id="code-form">
             {% csrf_token %}
             <input type="text" autocomplete="off" autocapitalize="off" name="code" placeholder="Digite o código enviado para seu email." id="code-input">
             <a href="/">Enviar código novamente</a>
         </form>
-        
         {% endif %}
+
         {% if stage == 1 or stage == 2%}
         <p id="info">{{info}}</p>
+        {% endif %}
+
+        {% if stage == 3%}
+        <a href="https://github.com/luiisp/ValidEmail"><img src="https://i.ibb.co/2cLYs1V/520logo.png" alt="logo" style="width: 160px;"></a>
+        <h1 id="ok">{{info}}</h1>
+        <p>Seu email Foi verificado com sucesso.</p>
+        {% endif %}
+
         <div id="sobre">
             <a href="https://github.com/luiisp"><ion-icon name="logo-github"></ion-icon></a>
             <a href="https://www.linkedin.com/in/pedro-luis-dias-757225285/"><ion-icon name="logo-linkedin"></ion-icon></a>
         </div>
-        
-        {% endif %}
-
-        {% if stage == 3%}
-
-        <h1 id="ok">{{info}}</h1>
-        <a href="https://github.com/luiisp/ValidEmail"><img src="https://i.ibb.co/2cLYs1V/520logo.png" alt="logo" style="width: 160px;"></a>
-        <p>Seu email Foi verificado com sucesso.</p>
-        <div>
-            <p>Você pode ver mais dos meus mirabolantes projetos no meu github :D</p>
-            <a href=""><ion-icon name="logo-github"></ion-icon></a>
-            <a href=""><ion-icon name="logo-linkedin"></ion-icon></a>
-        </div>
-        
-        {% endif %}
 
     </div>
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-<script src="{% static 'js/script.js' %}?v1"></script>
+<script src="{% static 'js/script.js' %}"></script>
 </body>
 </html>
