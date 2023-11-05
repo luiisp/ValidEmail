@@ -46,6 +46,11 @@
         {% endif %}
         {% if stage == 1 or stage == 2%}
         <p id="info">{{info}}</p>
+        <div id="sobre">
+            <a href="https://github.com/luiisp"><ion-icon name="logo-github"></ion-icon></a>
+            <a href="https://www.linkedin.com/in/pedro-luis-dias-757225285/"><ion-icon name="logo-linkedin"></ion-icon></a>
+        </div>
+        
         {% endif %}
 
         {% if stage == 3%}
@@ -53,13 +58,14 @@
         <h1 id="ok">{{info}}</h1>
         <a href="https://github.com/luiisp/ValidEmail"><img src="https://i.ibb.co/2cLYs1V/520logo.png" alt="logo" style="width: 160px;"></a>
         <p>Seu email Foi verificado com sucesso.</p>
-        <p>Você pode ver mais dos meus mirabolantes projetos no meu github :D</p>
-        {% endif %}
-        <div id="sobre">
+        <div>
+            <p>Você pode ver mais dos meus mirabolantes projetos no meu github :D</p>
             <a href=""><ion-icon name="logo-github"></ion-icon></a>
             <a href=""><ion-icon name="logo-linkedin"></ion-icon></a>
         </div>
         
+        {% endif %}
+
     </div>
 
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
