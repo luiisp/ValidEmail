@@ -16,9 +16,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from ValidEmail_App import views
 from ValidEmail_App.views import Menu
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', Menu.as_view(),name='menu'),
+    path('sucess', views.sucess,name='sucess'),
 ]

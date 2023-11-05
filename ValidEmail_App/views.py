@@ -1,10 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
+from .  models import Mail
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import random
 import re
+
 
 def email_sintaxe(email):
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
@@ -20,7 +22,7 @@ def send_email(receiver,code):
     smtp_server = 'smtp.gmail.com'
     smtp_port = 587
     smtp_username = 'luiisp.validmail@gmail.com'
-    smtp_password = 'meru jrih sesu szzo'
+    smtp_password = 'ftoe fcej qzxf haxs'
     sender = 'Valid Email?'
 
 
@@ -68,29 +70,78 @@ def send_email(receiver,code):
     except Exception as e:
         print('Erro ao enviar o email: ' + str(e))
         return False
+    
+def sucess(request):
+    
+    return render(request,'sucess/sucess.html')
+
 class Menu(View):
     def get(self,request):
         notice = None
-        stage = 1
+        info = 'Este site simula o envio de codigos de confirmação para e-mail'
+        request.session['stage'] = 1
+        request.session['email'] = None 
         return render(request, 'menu/index.html',{'notice':notice,
-                                                  'stage':stage})
-    def post(self,request):
-        email = request.POST.get('email')
-        emailV = email_sintaxe(email)
-        if emailV == False:
-            notice = 'Email Invalido!'
-        else:
-            code = ''.join(str(random.randint(0, 9)) for _ in range(5))
-            send = send_email(email,code)
-            if send:
-                notice = f'Um código verificação foi enviado para {email}'
-                stage = 2
+                                                  'stage':request.session['stage'],
+                                                  'info':info})
+    def post(self,request): 
+        notice = 'ok'
+        info = 'Este site simula o envio de codigos de confirmação para e-mail'
+        stage = request.session['stage']
+        email = request.session['email']
+        if stage == 1:
+            email = request.POST.get('email')
+            emailV = email_sintaxe(email)
+            if emailV == False:
+                notice = 'Email Invalido!'
             else:
-                notice = f'Ocorreu um erro ao enviar o codigo a este email.'
+                code = ''.join(str(random.randint(0, 9)) for i in range(5))
+                send = send_email(email,code)
+                if send:
+                    notice = f'Um código verificação foi enviado para {email}'
+                    request.session['stage'] = 2
+                    request.session['email'] = email
+                    info = 'O codigo enviado por email pode estar na caixa de spam.'
+                    try:
+                        obj = Mail(email=email, code=code)
+                        obj.save()
 
+                    except Exception as e:
+                        mailv, created = Mail.objects.get_or_create(email=email)
+                        if not created:
+                            mailv.delete()
+                            obj = Mail(email=email, code=code)
+                            obj.save()
+                        pass
+
+                else:
+                    notice = f'Ocorreu um erro ao enviar o codigo a este email.'
+                    info = 'Verifique se esse email é mesmo valido.'
+        elif stage == 2:
+            codeN = request.POST.get('code')
+            obj = Mail.objects.filter(email=email, code=codeN)
+            if obj.exists():
+                obj = obj.first()
+                obj.delete()
+                request.session['stage'] = 3
+                notice = False
+                info = f'Parabéns {email}🎉🎉!!'
+
+            else: 
+                notice = f'O codigo inserido está incorreto. Tente novamente! '
+                info = 'Verifique o código enviado no seu email.'
+
+        else:
+            return redirect('menu')
+
+            
+
+
+            
 
         return render(request, 'menu/index.html',{'notice':notice,
-                                                  'stage':stage})
+                                                  'stage':request.session['stage'],
+                                                  'info':info})
        
 
     

@@ -4,20 +4,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Valid Mail?</title>
+    <title>
+        {% if stage == 1%}
+            Seu email é valido?
+        {% elif stage == 2%}
+            Digite o código de verificação enviado ao seu email.
+        {% else %}
+            Valid Email?
+        {% endif %}
+
+
+
+    </title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v1">
     <link rel="icon" href="{% static 'img/520logo.png' %}" type="image/x-icon">
 </head>
 <body>
 
-    {% if notice != None %}
-    <p id="notice">{{notice}}</p>
-    {% endif %}
+
 
     <div id="main">
+        {% if stage == 1 or stage == 2%}
+        {% if notice != None %}
+        <p id="notice">{{notice}}</p>
+        {% endif %}
         <img src="{% static 'img/520logo.png' %}" alt="" id="logo">
-        <h1>Seu email é valido?</h1>
-
+        {% endif %}
         {% if stage == 1%}
         <form name="email-form"  method="post" id="email-form">
             {% csrf_token %}
@@ -27,11 +39,31 @@
         {% if stage == 2%}
         <form name="code-form"  method="post" id="code-form">
             {% csrf_token %}
-            <input type="text" autocomplete="off" autocapitalize="off" name="code" placeholder="Digite o codigo enviado para seu email." id="code-input">
+            <input type="text" autocomplete="off" autocapitalize="off" name="code" placeholder="Digite o código enviado para seu email." id="code-input">
+            <a href="/">Enviar código novamente</a>
         </form>
+        
         {% endif %}
-        <p id="info">Este site simula o envio de codigos de confirmação para e-mail</p>
+        {% if stage == 1 or stage == 2%}
+        <p id="info">{{info}}</p>
+        {% endif %}
+
+        {% if stage == 3%}
+
+        <h1 id="ok">{{info}}</h1>
+        <a href="https://github.com/luiisp/ValidEmail"><img src="https://i.ibb.co/2cLYs1V/520logo.png" alt="logo" style="width: 160px;"></a>
+        <p>Seu email Foi verificado com sucesso.</p>
+        <p>Você pode ver mais dos meus mirabolantes projetos no meu github :D</p>
+        {% endif %}
+        <div id="sobre">
+            <a href=""><ion-icon name="logo-github"></ion-icon></a>
+            <a href=""><ion-icon name="logo-linkedin"></ion-icon></a>
+        </div>
+        
     </div>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 <script src="{% static 'js/script.js' %}?v1"></script>
 </body>
 </html>
