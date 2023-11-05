@@ -79,7 +79,7 @@ def sucess(request):
 class Menu(View):
     def get(self,request):
         notice = None
-        info = 'Este site simula o envio de codigos de confirmação para e-mail'
+        info = 'Este site simula o envio de códigos de confirmação por e-mail.'
         request.session['stage'] = 1
         request.session['email'] = None 
         
@@ -90,7 +90,7 @@ class Menu(View):
 
     def post(self,request): 
         notice = 'ok'
-        info = 'Este site simula o envio de codigos de confirmação para e-mail'
+        info = 'Este site simula o envio de códigos de confirmação por e-mail.'
         stage = request.session['stage']
         email = request.session['email']
         if stage == 1:
@@ -132,7 +132,7 @@ class Menu(View):
                 info = f'Parabéns {email}🎉🎉!!'
 
             else: 
-                notice = f'O codigo inserido está incorreto. Tente novamente! '
+                notice = f'O código inserido está incorreto. Tente novamente! '
                 info = 'Verifique o código enviado no seu email.'
 
         else:
