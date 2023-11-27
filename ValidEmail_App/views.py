@@ -49,7 +49,7 @@ def send_email(receiver,code):
                         <p style="font-size: 14px;">Insira este código no site que provavelmente deve estar rodando <a href="http://127.0.0.1:8000/" style="color: #11e594; text-decoration: none;">nesta porta</a></p>
                         <p style="font-size: 14px;"><a href="https://github.com/luiisp/ValidEmail" style="color: #4611E5; text-decoration: none;">Visite o repositório oficial</a></p>
                         <a style="color: #ffffff; font-size: 24px;" href="https://github.com/luiisp">GitHub</a>
-                        <a style="color: #ffffff; font-size: 24px;" href="https://www.linkedin.com/in/pedro-luis-dias-757225285/">LinkedIn</a>
+                        <a style="color: #ffffff; font-size: 24px;" href="https://www.linkedin.com/in/luiisp/">LinkedIn</a>
                     </div>
                 </td>
             </tr>
